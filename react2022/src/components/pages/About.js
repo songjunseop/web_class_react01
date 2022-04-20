@@ -30,7 +30,7 @@ class About extends React.Component {
         isLoading: true,
     }
 
-    getSite = () => {
+    mainAnimation = () => {
         setTimeout(() => {
             gsap.to("#header", {
                 duration: 0.4,
@@ -63,15 +63,17 @@ class About extends React.Component {
             })
         }, 10)
     }
-    mainAnimation = () => {
-        gsap.set(".about__inner", {opacity: 0})
+    getSite = () => {
+        setTimeout(() => {
+            this.setState({isLoading: false})
+            this.mainAnimation()
+        }, 1600)
     }
     
     componentDidMount(){
         setTimeout(() => {
             document.getElementById("loading").classList.remove("loading__active");
-            document.querySelector("body").style.background = "#fff";
-            this.setState({isLoading:false});
+            document.querySelector("body").style.background = "#f0eeeb";
             this.getSite();
         }, 2000)
     }

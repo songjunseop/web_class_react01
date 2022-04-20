@@ -32,9 +32,9 @@ const aboutText = [
     }
 ]
 
-function AboutCont(props) {
+function AboutCont({color}) {
   return (
-    <section className={`about__cont ${props.color}`} >
+    <section className={`about__cont ${color}`} >
         <div className="container">
             <div className="about__inner">
                 {aboutText.map(txt => (

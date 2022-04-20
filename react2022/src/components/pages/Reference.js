@@ -7,6 +7,7 @@ import Contact from "../layout/Contact";
 import ReferCont from "../includes/ReferCont";
 import Loading from "../basics/Loading";
 import { gsap } from "gsap";
+import axios from "axios";
 
 // function Reference(){
 //     return (
@@ -28,9 +29,10 @@ import { gsap } from "gsap";
 class Reference extends React.Component {
     state = {
         isLoading: true,
+        refers: [],
     }
     
-    getSite = () =>{
+    mainAnimation = () =>{
         setTimeout(() => {
             gsap.to("#header", {
                 duration: 0.4,
@@ -63,37 +65,45 @@ class Reference extends React.Component {
             })
         }, 10)
     }
-    mainAnimation = () => {
-        gsap.set(".refer__inner", {opacity: 0})
+    getSite = async () => {
+        const {
+            data: {
+                data : {refer}
+            },
+        } = await axios.get("https://songjunseop.github.io/web_class_react01/react2022/src/assets/json/reference.json");
+
+        this.setState({refers: refer, isLoading: false})
+        
+        console.log(refer)
+        this.mainAnimation();
     }
 
     componentDidMount(){
         setTimeout(() => {
             document.getElementById("loading").classList.remove("loading__active");
             document.querySelector("body").style.background = "#f0eeeb";
-            this.setState({isLoading:false});
             this.getSite();
         }, 2000)
     }
 
     render(){
-        const {isLoading} = this.state;
+        const {isLoading, refers} = this.state;
 
         return (
             <>
                 {isLoading ? (
-                    <Loading />
+                    <Loading color = {"light"}/>
                 ) : (
                     <>
-                        <Header />
+                        <Header color = {"light"} />
                         <Contents>
-                            <Title title = {["REFERENCE", "BOOK"]}/>
+                            <Title title = {["REFERENCE", "BOOK", "light"]}/>
                             {/* <ReferCont color = {"light"} /> */}
-                            <ReferCont />
+                            <ReferCont refers = {refers} color = {"light"} />
                             <Contact />
                         </Contents>
                         {/* <Footer color = {"light"} /> */}
-                        <Footer />
+                        <Footer color = {"light"} />
                     </>
                 )}
             </>

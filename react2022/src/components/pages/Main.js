@@ -28,7 +28,7 @@ class Main extends React.Component {
         isLoading: true,
 
     }
-    getSite = () => {
+    mainAnimation = () => {
         setTimeout(() => {
             gsap.to("#header", {
                 duration: 0.4,
@@ -69,8 +69,11 @@ class Main extends React.Component {
         }, 10)
     }
 
-    mainAnimation = () => {
-        gsap.set(".main__inner", {opacity: 0})
+    getSite = () => {
+        setTimeout(() => {
+            this.setState({isLoading:false});
+            this.mainAnimation();
+        }, 1600)
     }
 
     // 생명주기 - 사이트가 로딩이 다 됐을때(componentDidMount)
@@ -78,8 +81,7 @@ class Main extends React.Component {
         setTimeout(() => {
             // 변수의 상태를 바꿀때(setState)
             document.getElementById("loading").classList.remove("loading__active");
-            document.querySelector("body").style.background = "#f0eeeb";
-            this.setState({isLoading:false});
+            document.querySelector("body").style.background = "#000";
             this.getSite();
         }, 2000);
     }

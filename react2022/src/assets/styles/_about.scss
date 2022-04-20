@@ -61,13 +61,21 @@
     }
 }
 
+// 라이트 버전
 .about__cont.light {
     background-color: var(--light_bg);
+}
 
-    .about {
+.about {
+    h3 {
         color: var(--black);
     }
+    p {
+        color: var(--black);
+    }
+    
 }
+
 
 @media (max-width: 1200px){
     .about__cont {
@@ -96,3 +104,4 @@
     opacity: 0;
     transform: translateY(50px);
 }
+
