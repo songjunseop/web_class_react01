@@ -25,3 +25,9 @@
 .refer__cont.light {
     background: var(--light_bg);
 }
+
+// refer Animation
+.refer__inner {
+    opacity: 0;
+    transform: translateY(50px);
+}

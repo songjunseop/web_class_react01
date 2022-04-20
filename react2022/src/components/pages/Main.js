@@ -77,9 +77,11 @@ class Main extends React.Component {
     componentDidMount(){
         setTimeout(() => {
             // 변수의 상태를 바꿀때(setState)
+            document.getElementById("loading").classList.remove("loading__active");
+            document.querySelector("body").style.background = "#f0eeeb";
             this.setState({isLoading:false});
             this.getSite();
-        }, 3000);
+        }, 2000);
     }
 
     // 출력해주는 함수
