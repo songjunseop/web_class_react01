@@ -1,0 +1,27 @@
+.refer__cont {
+    background-color: var(--black);
+    min-height: 100vh;
+}
+.refer__inner {
+    h2 {
+        color: var(--white);
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+    table {
+        border-top: 1px solid var(--light_border);
+        border-bottom: 2px solid var(--light_border);
+        color: var(--white);
+        td {
+            border-top: 1px solid var(--light_border);
+            padding: 1.4rem 0;
+            font-family: var(--subKor_font);
+            font-weight: 300;
+        }
+    }
+}
+
+// light 버전
+.refer__cont.light {
+    background: var(--light_bg);
+}

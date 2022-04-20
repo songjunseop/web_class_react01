@@ -1,0 +1,21 @@
+.main__cont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #000;
+
+    .main__inner {
+        flex-direction: column;
+        font-family: var(--main_font);
+        color: #fff;
+        font-size: 10vw;
+        line-height: 0.85;
+    }
+}
+
+// main Animation
+.main__inner > div {
+    opacity: 0;
+    transform: translateY(100px);
+}
