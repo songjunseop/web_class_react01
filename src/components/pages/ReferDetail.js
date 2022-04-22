@@ -160,7 +160,7 @@ class ReferDetail extends React.Component {
                             </div>
                         </div>
                     </section>
-                    </Contents>
+                    </Contents> 
                     <Footer color="light" />
                 </>
             )

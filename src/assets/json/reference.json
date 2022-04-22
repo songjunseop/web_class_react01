@@ -56,6 +56,7 @@
             "<abbr> 태그는 title 속성을 설정할 경우 마우스 오버시 툴팁 형식으로 약어가 표시됩니다."
           ],
           "Accessibility": [
+            "-"
           ],
           "CrossBroswing": [
             "HTML4에서는 약어를 표현할 때 <acronym>를 사용하였지만, HTML5에서는 약어를 표현할 때 <abbr>를 사용합니다."
@@ -80,6 +81,7 @@
             "<acronym>는 HTML4 태그이고, HTML5에서 지원되지 않는 오래된 태그입니다. 일부 브라우저에서 작동 될 수 있지만 사용을 권장하지 않습니다"
           ],
           "Accessibility": [
+            "-"
           ],
           "CrossBroswing": [
             "HTML4에서는 약어에 대해서는 <acronym>를 사용하고, HTML5에서는 약어를 <abbr>로 사용합니다."
@@ -108,6 +110,7 @@
             "<address> 태그는 일반적으로 <footer> 영역에서 많이 사용합니다."
           ],
           "Accessibility": [
+            "-"
           ],
           "CrossBroswing": [
           ],
@@ -131,6 +134,7 @@
             "<applet> 태그는 자바 애플랫 요소를 사용하기 위한 개발자 소스였으나, 현재는 사용하지 않으며, <object> 태그를 사용합니다."
           ],
           "Accessibility": [
+            "-"
           ],
           "CrossBroswing": [
             "HTML5에서 지원하지 않습니다. 대신 <embed> 태그와 <object> 태그를 이용합니다."
@@ -160,6 +164,7 @@
             "이미지 맵은 위치가 고정적이기 때문에 반응형 사이트에서 적용 할 수 없습니다."
           ],
           "Accessibility": [
+            "-"
           ],
           "CrossBroswing": [
           ],
