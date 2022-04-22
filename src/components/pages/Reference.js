@@ -141,7 +141,7 @@ class Reference extends React.Component {
                 ease: "Power4.out"
             })
             // gsap.to(".refer__inner", {
-            //     duration: 0.5,
+            //     duration: 0.9,
             //     y: 0,
             //     opacity: 1,
             //     delay: 1.5,

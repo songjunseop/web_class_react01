@@ -61,6 +61,7 @@ import { gsap } from "gsap";
 // }
 
 class ReferDetail extends React.Component {
+    
     componentDidMount(){
         const {location, history} = this.props;
         if(location.state === undefined) {
@@ -86,7 +87,15 @@ class ReferDetail extends React.Component {
     render(){
 
         const {location} = this.props;
-        console.log(location.state);
+        
+        const Definition = (location.state.Definition).map((el, index) => (
+
+            <li key={index}>{el}</li>
+        ))
+
+        const Accessibility = (location.state.Accessibility).map((el, index) => (
+            <li key={index}>{el}</li>
+        ))
 
         if(location.state === undefined){
             return <div>잘못된 페이지입니다.</div>
@@ -132,12 +141,18 @@ class ReferDetail extends React.Component {
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <h3 class='defin'>정의(Definition)</h3>
-                                    <p class="defin__desc">{location.state.Definition}</p>
-                                    <h3 class='acce'>접근성(Accessibility)</h3>
-                                    <p>{location.state.Accessibility}</p>
-                                    <h3 class='refersite'>참고 사이트(Reference)</h3>
-                                    <ul class="refersite__list">
+                                    
+                                    
+                                    <h3 className='defin'>정의(Definition)</h3>
+                                    <ul className='defin__list'>
+                                        {Definition}
+                                    </ul>
+                                    <h3 className='acce'>접근성(Accessibility)</h3>
+                                    <ul className='acce__list'>
+                                        {Accessibility}
+                                    </ul>
+                                    <h3 className='refersite'>참고 사이트(Reference)</h3>
+                                    <ul className="refersite__list">
                                         <li><a href="{location.state.mdn}">MDN</a></li>
                                         <li><a href="{location.state.w3c}">W3C</a></li>
                                     </ul>
