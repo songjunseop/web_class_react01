@@ -1,17 +1,15 @@
-import React from "react";
+import React from 'react'
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import Contents from "../layout/Contents";
 import Title from "../layout/Title";
 import Contact from "../layout/Contact";
-import YoutubeCont from "../includes/YoutubeCont";
-import YoutubeSearch from "../includes/YoutubeSearch";
-// import YoutubeList from "../includes/YoutubeList";
-import axios from "axios";
+import MovieCont from "../includes/MovieCont"
+import axios from 'axios';
 import Loading from "../basics/Loading";
 import { gsap } from "gsap";
 
-class Youtube extends React.Component {
+class Movie extends React.Component {
     state = {
         isLoading: true,
         lists: [],
@@ -52,10 +50,9 @@ class Youtube extends React.Component {
         }, 10)
     }
 
-    getYoutubes = async () => {
-        const lists = await axios.get("https://youtube.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=30&q=%EB%A9%9C%EB%A1%A0&key=AIzaSyBCZ1dZYcn9rNZshdqQTtK8ftLKBg1zsC4");
-
-        console.log(lists)
+    getMoives = async () => {
+        const lists = await axios.get("https://api.themoviedb.org/3/search/movie?api_key=8b06fb071e6685e3dacb102957311047&query=avengers&type=video")
+        
         this.setState({lists, isLoading: false});
         this.mainAnimation();
     }
@@ -63,24 +60,24 @@ class Youtube extends React.Component {
     componentDidMount(){
         setTimeout(() => {
             document.getElementById("loading").classList.remove("loading__active");
-            this.getYoutubes();
+            this.getMoives();
         }, 2000);
     }
 
     render() {
 
         const { isLoading, lists } = this.state;
+        console.log(lists)
         return (
             <>
-                {isLoading ? (
+                { isLoading ? (
                     <Loading />
                 ) : (
                     <>
                         <Header />
                         <Contents>
-                            <Title title={["Youtube", "Reference"]} />
-                            <YoutubeSearch />
-                            <YoutubeCont lists = {lists} />
+                            <Title title={["The", "Movie"]} />
+                            <MovieCont lists = {lists} />
                             <Contact />
                         </Contents>
                         <Footer />
@@ -89,6 +86,7 @@ class Youtube extends React.Component {
             </>
         )
     }
+
 }
 
-export default Youtube;
+export default Movie

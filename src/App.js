@@ -8,6 +8,7 @@ import Reference from "./components/pages/Reference";
 import Script from "./components/pages/Script";
 import Youtube from "./components/pages/Youtube";
 import ReferDetail from "./components/pages/ReferDetail";
+import Movie from "./components/pages/Movie";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Route path="/about" exact component={About} />
       <Route path="/reference" exact component={Reference} />
       <Route path="/refer-detail" exact component={ReferDetail} />
+      <Route path="/movie" exact component={Movie} />
       <Route path="/script" exact component={Script} />
       <Route path="/youtube" exact component={Youtube} />
       <Route path="/contact" exact component={Contact} />
