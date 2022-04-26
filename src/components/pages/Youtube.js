@@ -1,25 +1,24 @@
-import React from "react";
+// { useEffect, useState } == react hook을 사용하겠다고선언
+import React, { useEffect, useState } from 'react' 
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import Contents from "../layout/Contents";
 import Title from "../layout/Title";
 import Contact from "../layout/Contact";
-import YoutubeCont from "../includes/YoutubeCont";
+import YoutubeList from "../includes/YoutubeList";
 import YoutubeSearch from "../includes/YoutubeSearch";
-// import YoutubeList from "../includes/YoutubeList";
-import axios from "axios";
-import Loading from "../basics/Loading";
 import { gsap } from "gsap";
+import Loading from '../basics/Loading';
 
-class Youtube extends React.Component {
-    state = {
-        isLoading: true,
-        lists: [],
-        searchs: []
-    }
+// npm i dotenv 환경변수 설치
+// require('dotenv').config()
 
-    mainAnimation = () => {
+function Youtube() {
+
+    function mainAnimation(){
         setTimeout(() => {
+            document.getElementById("loading").classList.remove("loading__active");
+
             gsap.to("#header", {
                 duration: 0.4,
                 top: 0,
@@ -42,53 +41,83 @@ class Youtube extends React.Component {
                 delay: 1.3,
                 ease: "Power4.out"
             })
-            // gsap.to(".refer__inner", {
-            //     duration: 0.9,
-            //     y: 0,
-            //     opacity: 1,
-            //     delay: 1.5,
-            //     ease: "Power4.out"
-            // })
+            gsap.to(".youtube__search", {
+                duration: 0.7,
+                y: 0,
+                opacity: 1,
+                delay: 1.5,
+                ease: "Power4.out"
+            })
+            gsap.to(".youtube__list", {
+                duration: 0.7,
+                y: 0,
+                opacity: 1,
+                delay: 1.5,
+                ease: "Power4.out"
+            })
         }, 10)
     }
+    
+    
+    // 변수 --> 
+    const [videos, setVideos] = useState([])
 
-    getYoutubes = async () => {
-        const lists = await axios.get("https://youtube.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=30&q=%EB%A9%9C%EB%A1%A0&key=AIzaSyBCZ1dZYcn9rNZshdqQTtK8ftLKBg1zsC4");
-
-        console.log(lists)
-        this.setState({lists, isLoading: false});
-        this.mainAnimation();
+    const search = (query) => {
+        var requestOptions = {
+            method: 'GET',
+            redirect: 'follow'
+        };
+    
+        fetch(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=28&q=${query}&key=${process.env.REACT_APP_YOUTUBE_API}&type=video`, requestOptions)
+        // fetch(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=28&q=${query}&key=AIzaSyBCZ1dZYcn9rNZshdqQTtK8ftLKBg1zsC4&type=video`, requestOptions)
+        // fetch의 값을 json파일로 가져옴
+        .then(response => response.json())
+        // json파일의 결과
+        .then(result => setVideos(result.items))
+        .catch(error => console.log('error', error));
+        
     }
 
-    componentDidMount(){
-        setTimeout(() => {
-            document.getElementById("loading").classList.remove("loading__active");
-            this.getYoutubes();
-        }, 2000);
-    }
+    // react hook
+    useEffect(() => {
 
-    render() {
+        var requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+        };
 
-        const { isLoading, lists } = this.state;
-        return (
-            <>
-                {isLoading ? (
-                    <Loading />
-                ) : (
-                    <>
-                        <Header />
-                        <Contents>
-                            <Title title={["Youtube", "Reference"]} />
-                            <YoutubeSearch />
-                            <YoutubeCont lists = {lists} />
-                            <Contact />
-                        </Contents>
-                        <Footer />
-                    </>
-                )}
-            </>
-        )
-    }
+        fetch(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=28&q=%EB%A9%9C%EB%A1%A0&key=${process.env.REACT_APP_YOUTUBE_API}&type=video`, requestOptions)
+        // fetch(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=28&q=%EB%A9%9C%EB%A1%A0&key=AIzaSyBCZ1dZYcn9rNZshdqQTtK8ftLKBg1zsC4&type=video`, requestOptions)
+        // fetch의 값을 json파일로 가져옴
+        .then(response => response.json())
+        // json파일의 결과
+        .then(result => {
+            setVideos(result.items) 
+            mainAnimation();
+        })
+        .catch(error => console.log('error', error));
+    }, []);
+
+    console.log(videos)
+  return (
+    <>
+        <Loading />
+        <Header />
+        <Contents>
+            <Title title={["youtube", "reference"]} />
+            <section className='youtube__cont'>
+                <div className="container">
+                    <div className="youtube__inner">
+                        <YoutubeSearch onSearch = {search} />
+                        <YoutubeList videos = {videos} />
+                    </div>
+                </div>
+            </section>
+            <Contact />
+        </Contents>
+        <Footer />
+    </>
+  )
 }
 
-export default Youtube;
+export default Youtube

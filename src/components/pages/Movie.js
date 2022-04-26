@@ -1,23 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import Contents from "../layout/Contents";
 import Title from "../layout/Title";
 import Contact from "../layout/Contact";
-import MovieCont from "../includes/MovieCont"
-import axios from 'axios';
+import MovieSearch from "../includes/MovieSearch"
+import MovieList from "../includes/MovieList"
 import Loading from "../basics/Loading";
 import { gsap } from "gsap";
 
-class Movie extends React.Component {
-    state = {
-        isLoading: true,
-        lists: [],
-        searchs: []
-    }
+// require('dotenv').config()
 
-    mainAnimation = () => {
+function Movie(){
+
+    const [videos, setVideos] = useState([])
+
+    function mainAnimation(){
         setTimeout(() => {
+            document.getElementById("loading").classList.remove("loading__active");
+
             gsap.to("#header", {
                 duration: 0.4,
                 top: 0,
@@ -40,53 +41,73 @@ class Movie extends React.Component {
                 delay: 1.3,
                 ease: "Power4.out"
             })
-            // gsap.to(".refer__inner", {
-            //     duration: 0.9,
-            //     y: 0,
-            //     opacity: 1,
-            //     delay: 1.5,
-            //     ease: "Power4.out"
-            // })
+            gsap.to(".movie__search", {
+                duration: 0.7,
+                y: 0,
+                opacity: 1,
+                delay: 1.5,
+                ease: "Power4.out"
+            })
+            gsap.to(".movie__list", {
+                duration: 0.7,
+                y: 0,
+                opacity: 1,
+                delay: 1.5,
+                ease: "Power4.out"
+            })
         }, 10)
     }
 
-    getMoives = async () => {
-        const lists = await axios.get("https://api.themoviedb.org/3/search/movie?api_key=8b06fb071e6685e3dacb102957311047&query=avengers&type=video")
-        
-        this.setState({lists, isLoading: false});
-        this.mainAnimation();
+
+    const search = (query) => {
+        var requestOptions = {
+            method: 'GET',
+            redirect: 'follow'
+          };
+          
+          fetch(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_MOVIE_API}&query=${query}&type=video&maxResults=28`, requestOptions)
+        //   fetch(`https://api.themoviedb.org/3/search/movie?api_key=8b06fb071e6685e3dacb102957311047&query=${query}&type=video&maxResults=28`, requestOptions)
+            .then(response => response.json())
+            .then(result => setVideos(result.results))
+            .catch(error => console.log('error', error));
     }
 
-    componentDidMount(){
-        setTimeout(() => {
-            document.getElementById("loading").classList.remove("loading__active");
-            this.getMoives();
-        }, 2000);
-    }
+    useEffect(() => {
+        var requestOptions = {
+            method: 'GET',
+            redirect: 'follow'
+          };
+          
+          fetch(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_MOVIE_API}&query=avengers&type=video&maxResults=28`, requestOptions)
+        //   fetch(`https://api.themoviedb.org/3/search/movie?api_key=8b06fb071e6685e3dacb102957311047&query=avengers&type=video&maxResults=28`, requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                setVideos(result.results)
+                mainAnimation();
+            })
+            .catch(error => console.log('error', error));
+    }, []);
+    console.log("arr",videos)
 
-    render() {
-
-        const { isLoading, lists } = this.state;
-        console.log(lists)
-        return (
-            <>
-                { isLoading ? (
-                    <Loading />
-                ) : (
-                    <>
-                        <Header />
-                        <Contents>
-                            <Title title={["The", "Movie"]} />
-                            <MovieCont lists = {lists} />
-                            <Contact />
-                        </Contents>
-                        <Footer />
-                    </>
-                )}
-            </>
-        )
-    }
-
+    return (
+        <>
+            <Loading />
+            <Header />
+            <Contents>
+                <Title title={["The", "Movie"]} />
+                <section className='movie__cont'>
+                    <div className="container">
+                        <div className="movie__inner">
+                            <MovieSearch onSearch = {search} />
+                            <MovieList videos = {videos} />
+                        </div>
+                    </div>
+                </section>
+                <Contact />
+            </Contents>
+            <Footer />
+        </>
+    )
 }
 
 export default Movie
